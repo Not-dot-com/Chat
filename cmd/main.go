@@ -6,8 +6,6 @@ import (
 	"net/http"
 )
 
-// Нужны два новых обработчика для страниц: loginPage, registrationPage
-// Need two new handlers for pages: loginPage, registrationPage
 
 func main() {
 	// Регистрируем два новых обработчика и соответствующие URL-шаблоны в
@@ -24,5 +22,4 @@ func main() {
 	log.Fatal(err)
 }
 
-// New function home. Need to replace it to top.
 // Прикольно было бы добавить автоматическое открытие сайта при запуске программы

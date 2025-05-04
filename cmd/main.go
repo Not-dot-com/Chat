@@ -6,33 +6,19 @@ import (
 	"text/template"
 )
 
-func home(w http.ResponseWriter, r *http.Request) {
+// Creating new page with url /home. Create connection with html template
+func homePageHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
 	}
-
-	w.Write([]byte("Home page of Messenger"))
-}
-
-func showSnippet(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Отображение заметки..."))
-}
-
-func createSnippet(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Форма для создания новой заметки.."))
-}
-
-// Need new functions for two pages: homePage(ui/templates/homePage) and registrationPage(ui/templates/registrationPage)
-// Creating new page with url /home. Create connection with html template
-func homePageHandler(w http.ResponseWriter, r *http.Request) {
 	// Create simple info about page
 	data := struct {
 		PageName string
 		Content  string
 	}{
 		PageName: "Home",
-		Content:  "SomeInformation about ass",
+		Content:  "Some Information about ass",
 	}
 
 	// Create adresses to html files. Home files and layout
@@ -51,6 +37,16 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func showSnippet(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Отображение заметки..."))
+}
+
+func createSnippet(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Форма для создания новой заметки.."))
+}
+
+// Need new functions for page registrationPage(ui/templates/registrationPage)
+
 // Need the same thing as with homePageHandler
 func registrationPageHandler(w http.ResponseWriter, r *http.Request) {
 
@@ -58,10 +54,13 @@ func registrationPageHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", home)
+	mux.HandleFunc("/", homePageHandler)
 	mux.HandleFunc("/snippet", showSnippet)
 	mux.HandleFunc("/snippet/create", createSnippet)
-	mux.HandleFunc("/home", homePageHandler)
+
+	// Adding css styles handler from file assets
+	fileServer := http.FileServer(http.Dir("../ui/templates/assets"))
+	mux.Handle("/assets/", http.StripPrefix("/assets", fileServer))
 
 	log.Println("Запуск веб-сервера на http://127.0.0.1:4000")
 	err := http.ListenAndServe(":4000", mux)

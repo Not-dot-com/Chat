@@ -11,7 +11,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write([]byte("Home page of Messengere"))
+	w.Write([]byte("Home page of Messenger"))
 }
 
 func showSnippet(w http.ResponseWriter, r *http.Request) {
@@ -19,7 +19,7 @@ func showSnippet(w http.ResponseWriter, r *http.Request) {
 }
 
 func createSnippet(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Форма для создания новой замтки.."))
+	w.Write([]byte("Форма для создания новой заметки.."))
 }
 
 func main() {
@@ -32,3 +32,5 @@ func main() {
 	err := http.ListenAndServe(":4000", mux)
 	log.Fatal(err)
 }
+
+// Прикольно было бы добавить автоматическое открытие сайта при запуске программы

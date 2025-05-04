@@ -15,6 +15,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
+}
 
 // Обработчик для отображения содержимого заметки.
 func showSnippet(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +44,8 @@ func main() {
 	log.Fatal(err)
 }
 
+// New function home. Need to replace it to top.
+// Handler for home page
 func homePageHandler(w http.ResponseWriter, r *http.Request) {
 	// Проверяется, если текущий путь URL запроса точно совпадает с шаблоном "/". Если нет, вызывается
 	// функция http.NotFound() для возвращения клиенту ошибки 404.

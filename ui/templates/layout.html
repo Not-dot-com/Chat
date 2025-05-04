@@ -1,0 +1,25 @@
+<!-- templates/layout.html -->
+<!DOCTYPE html>
+<html>
+    <head>
+        {{define "meta"}}
+        <meta charset="utf-8">
+        {{end}}
+        <title>{{.PageName}}</title>
+        <link rel="stylesheet" href="assets/layoutStyles.css">
+    </head>
+
+    <body>
+        <header>
+            <hc>{{.PageName}} page</h1>
+        </header>
+
+            <main>
+                {{template "content" .}}
+            </main>
+
+        <footer>
+            
+        </footer>
+    </body>
+</html>

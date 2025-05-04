@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 	"net/http"
+	"text/template"
 )
 
-// Обработчик главной страницы.
 func home(w http.ResponseWriter, r *http.Request) {
 	// Проверяется, если текущий путь URL запроса точно совпадает с шаблоном "/". Если нет, вызывается
 	// функция http.NotFound() для возвращения клиенту ошибки 404.
@@ -15,8 +15,6 @@ func home(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-
-	w.Write([]byte("Home page of Messengere"))
 }
 
 // Обработчик для отображения содержимого заметки.
@@ -26,35 +24,60 @@ func showSnippet(w http.ResponseWriter, r *http.Request) {
 
 // Обработчик для создания новой заметки.
 func createSnippet(w http.ResponseWriter, r *http.Request) {
-	// Используем r.Method для проверки, использует ли запрос метод POST или нет. Обратите внимание,
-	// что http.MethodPost является строкой и содержит текст "POST".
-	if r.Method != http.MethodPost {
-		// Используем метод Header().Set() для добавления заголовка 'Allow: POST' в
-		// карту HTTP-заголовков. Первый параметр - название заголовка, а
-		// второй параметр - значение заголовка.
-		w.Header().Set("Allow", http.MethodPost)
-
-		// Используем функцию http.Error() для отправки кода состояния 405 с соответствующим сообщением.
-		http.Error(w, "Метод запрещён!", 405)
-
-		// Затем мы завершаем работу функции вызвав "return", чтобы
-		// последующий код не выполнялся.
-		return
-	}
-
-	w.Write([]byte("Создание новой заметки..."))
-
+	w.Write([]byte("Форма для создания новой замтки.."))
 }
 
 func main() {
 	// Регистрируем два новых обработчика и соответствующие URL-шаблоны в
 	// маршрутизаторе servemux
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", home)
+	mux.HandleFunc("/", homePageHandler)
 	mux.HandleFunc("/snippet", showSnippet)
 	mux.HandleFunc("/snippet/create", createSnippet)
+
+	// Adding css styles handler from file assets
+	fileServer := http.FileServer(http.Dir("../ui/templates/assets"))
+	mux.Handle("/assets/", http.StripPrefix("/assets", fileServer))
 
 	log.Println("Запуск веб-сервера на http://127.0.0.1:4000")
 	err := http.ListenAndServe(":4000", mux)
 	log.Fatal(err)
 }
+
+// New function home. Need to replace it to top.
+// Handler for home page
+func homePageHandler(w http.ResponseWriter, r *http.Request) {
+	// Проверяется, если текущий путь URL запроса точно совпадает с шаблоном "/". Если нет, вызывается
+	// функция http.NotFound() для возвращения клиенту ошибки 404.
+	// Важно, чтобы мы завершили работу обработчика через return. Если мы забудем про "return", то обработчик
+	// продолжит работу и выведет сообщение "Привет из SnippetBox" как ни в чем не бывало.
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+	// Create simple info about page
+	data := struct {
+		PageName string
+		Content  string
+	}{
+		PageName: "Home",
+		Content:  "Some Information about ass",
+	}
+
+	// Create adresses to html files. Home files and layout
+	tmpl, err := template.ParseFiles("../ui/templates/layout.html",
+		"../ui/templates/homePage.html") // error system can't fine path home.html
+	if err != nil {
+		log.Printf("homePageHandler error with file parsing: %v", err)
+		return
+	}
+
+	// Send data to page
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Printf("homePageHandler error with file executing: %v", err)
+	}
+
+}
+
+// Прикольно было бы добавить автоматическое открытие сайта при запуске программы

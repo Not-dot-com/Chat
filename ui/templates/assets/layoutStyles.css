@@ -6,51 +6,35 @@ body {
     font-size: 20px;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensure body is at least the height of the viewport */
+    min-height: 100vh;
     background-color: black;
     color: aqua;
 }
 
 header {
+    background-color: lightblue;
     padding: 20px;
-    min-height: 100px;
     text-align: center;
 }
 
-header {
-    background-color: darkblue;
-    padding: 20px;
-    min-height: 100px;
-    text-align: center;
-    vertical-align: middle;
+main {
+    display: grid;
+    place-items: center; /* Shorthand для justify-content и align-items */
+    flex: 1;
+    padding: 20px; /* Добавьте отступы, чтобы контент не прилипал к краям */
 }
 
 footer {
     background-color: darkblue;
-    color: white;
+    color: aqua;
+    font-size: 16px;
     padding: 20px;
-    height: 80px;
-    text-align: left;
-    vertical-align: middle;
-}
-
-main {
-    display: flex;
-    flex: 1;
-    flex-grow: 1;
+    min-height: 60px;
+    text-align: center;
 }
 
 .homePage {
     text-align: center;
-    vertical-align: middle;
     font-size: 35px;
-}
-
-.registrationPage {
-    background-color: cadetblue;
-    color: black;
-    margin-top: 30px;
-    align-content: center;
-    text-align: center;
 }
 

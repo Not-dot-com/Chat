@@ -4,6 +4,7 @@
     <head>
         {{define "meta"}}
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {{end}}
         <title>{{.PageName}}</title>
         <link rel="stylesheet" href="assets/layoutStyles.css">
@@ -11,15 +12,19 @@
 
     <body>
         <header>
-            <hc>{{.PageName}} page</h1>
+            <h1>{{.PageName}} page</h1>
         </header>
 
-            <main>
-                {{template "content" .}}
+            <main> 
+             
+                        {{template "content" .}}
+                 
             </main>
 
         <footer>
-            
+            <div>
+                Made by Igor and Vovka
+            </div>
         </footer>
     </body>
 </html>

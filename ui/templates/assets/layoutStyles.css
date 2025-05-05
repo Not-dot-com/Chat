@@ -1,29 +1,56 @@
 @charset "utf-8";
 
 body {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 20px;
     display: flex;
     flex-direction: column;
+    min-height: 100vh; /* Ensure body is at least the height of the viewport */
     background-color: black;
     color: aqua;
-    font-size: 20px;
-    min-height: 1000px;
-    margin: 0;
+}
+
+header {
+    padding: 20px;
+    min-height: 100px;
+    text-align: center;
 }
 
 header {
     background-color: darkblue;
-    height: 120px;
+    padding: 20px;
+    min-height: 100px;
     text-align: center;
-    align-content: center;
     vertical-align: middle;
-}
-
-main {
-    flex: 1;
 }
 
 footer {
     background-color: darkblue;
     color: white;
-    height: 100px;
+    padding: 20px;
+    height: 80px;
+    text-align: left;
+    vertical-align: middle;
 }
+
+main {
+    display: flex;
+    flex: 1;
+    flex-grow: 1;
+}
+
+.homePage {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 35px;
+}
+
+.registrationPage {
+    background-color: cadetblue;
+    color: black;
+    margin-top: 30px;
+    align-content: center;
+    text-align: center;
+}
+

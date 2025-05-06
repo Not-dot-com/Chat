@@ -1,3 +1,10 @@
+package services
+
+import (
+	"net/http"
+	"time"
+)
+
 func Refresh(w http.ResponseWriter, r *http.Request) {
 	// (BEGIN) The code from this point is the same as the first part of the `Welcome` route
 	c, err := r.Cookie("session_token")
